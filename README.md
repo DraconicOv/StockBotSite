@@ -1,0 +1,1 @@
+This is a new home for this project, I'm unsure what happened to the old repository. If you want to try and run this for your self, the models need new data & training. Run the files holybot, large_stock neruo_evolve, small_stock, etc, depending on what you want to use.
