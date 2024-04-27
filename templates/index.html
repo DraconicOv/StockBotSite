@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block title %}
+    Portfolio
+
+{% endblock %}
+
+{% block main %}
+
+    <div style="height: 50vh; width: 50%; margin: 0 auto; display:flex; flex-direction: row;justify-content:center;">
+        <canvas id="myChart0"style="flex:1; width:100%;"></canvas>
+        <canvas id="myChart1" style="flex:1; width:100%;"></canvas>
+    </div>
+ 
+    <script>
+        var ctx = document.getElementById('myChart0').getContext('2d');
+            
+            var data = {
+                labels: {{ port_data[0][1] | tojson }},
+                datasets: [
+                    {% for label, xvalues, yvalues, action in port_data %}
+                    {
+                        label: "{{ label }}",
+                        data: {{ yvalues | tojson }},
+                        fill: false,
+                        borderColor: getRandomColor(),
+                    },
+                    {% endfor %}
+                ]
+            };
+            console.log(data);
+                
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false, 
+                plugins: {
+                    tooltip: {
+                        usePointStyle: true,
+                        callbacks: {
+                            labelPointStyle: function(context) {
+                                return {
+                                    pointStyle: 'triangle',
+                                    rotation: 0,
+                                };
+                            },
+                            label: function(context){
+                                var i = context.datasetIndex
+                                var j = context.dataIndex;
+                                console.log(data)
+
+                            }
+                        },
+
+                    }
+                }
+            };
+
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: options
+            });
+
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+    </script>
+    <script>
+        var ctx = document.getElementById('myChart1').getContext('2d');
+
+            var stocks_data = {
+                labels: {{ stock_data[0][1] | tojson }},
+                datasets: [
+                    {% for label, xvalues, yvalues in stock_data %}
+                    {
+                        label: "{{ label }}",
+                        data: {{ yvalues | tojson }},
+                        fill: false,
+                        borderColor: getRandomColor(),
+                    },
+                    {% endfor %}
+                ]
+            };
+
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false,
+            };
+
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: stocks_data,
+                options: options
+            });
+
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+    </script>
+{%endblock%}

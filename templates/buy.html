@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    {#<div class="">#}
+    <h3>Predict for all dates from "days" days ago to the current date.</h3>
+    <p> Caps out at 6 months back, throws an error for any more, I didn't have time to implement error handling.</p>
+    <form action="/buy" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus="" class="form-control mx-auto w-auto" name="symbol" placeholder="Days" type="text">
+        </div>
+   {#     <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" min="1" name="shares" placeholder="Shares" type="number">
+        </div> #}
+        <button class="btn btn-primary" type="submit">Predict</button>
+    </form>
+{% endblock %}
